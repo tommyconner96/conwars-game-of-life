@@ -1,7 +1,7 @@
 # Cellular Automata and Conway's "Game of Life"
 
 ---
-
+ 
 **NOTE: This is not a data science project.** If you're in the data
 science track and want to do a DS-specific project, jump to the [Data
 Science Build Week
