@@ -1,37 +1,46 @@
-import React from "react"
-import { useEffect, useCallback, useRef } from "react"
-import { gridState, runningState, counterState } from "../recoilState/index"
-import { useRecoilState } from "recoil"
-import produce from "immer"
-import * as Grid from "../GridDefaults"
+import React, { useState } from "react"
+import { runningState, rowState, colState } from "../recoilState/index"
+import { useRecoilValue, useRecoilState } from "recoil"
+import * as Grid from '../GridDefaults'
 
 export default function(props) {
-  const [grid, setGrid] = useRecoilState(gridState)
-  const [counter, setCounter] = useRecoilState(counterState)
-  const [running, setRunning] = useRecoilState(runningState)
+  const running = useRecoilValue(runningState)
+  const [columns, setColumns] = useRecoilState(colState)
+  const [rows, setRows] = useRecoilState(rowState)
 
-  const randomizeGrid = () => {
-    const rows = []
-    for (let i = 0; i < Grid.numRows; i++) {
-      rows.push(
-        Array.from(Array(Grid.numCols), () => (Math.random() > 0.7 ? 1 : 0))
-      )
-    }
-
-    setGrid(rows)
-    setCounter(0)
+  const handleSubmit = e => {
+    e.preventDefault()
+    console.log(rows, columns)
   }
 
   return (
     <div>
-      {/* {running ? <button onClick={() => stopRun()}>stop</button>: <button onClick={run}>start</button>} */}
       <button onClick={props.run}>
         {running ? "stop" : "start"}
       </button>
 
-      <button onClick={randomizeGrid}>random</button>
+      <button onClick={props.randomizeGrid}>random</button>
       <button onClick={() => props.resetGrid()}>clear</button>
       {/* <GameContainer /> */}
+      <form onSubmit={handleSubmit}>
+        <label>
+          # of columns:
+          <input
+            type="text"
+            value={columns}
+            onChange={e => setColumns(e.target.value)}
+          />
+        </label>
+        <label>
+          # of rows:
+          <input
+            type="text"
+            value={rows}
+            onChange={e => setRows(e.target.value)}
+          />
+        </label>
+        <input type="submit" value="Submit" />
+      </form>
     </div>
   )
 }

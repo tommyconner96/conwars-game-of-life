@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { gridState, counterState, runningState } from "../recoilState/index"
-import { useRecoilState } from "recoil"
+import { gridState, counterState, runningState, rowState, colState } from "../recoilState/index"
+import { useRecoilState, useRecoilValue } from "recoil"
 import * as Grid from "../GridDefaults"
 import produce from "immer"
 
@@ -9,6 +9,7 @@ export default function() {
   const [counter, setCounter] = useRecoilState(counterState)
   const [grid, setGrid] = useRecoilState(gridState)
   const [running, setRunning] = useRecoilState(runningState)
+  const numCols = useRecoilValue(colState)
 
   useEffect(
     () => {
@@ -16,7 +17,7 @@ export default function() {
         setCounter(counter + 1)
         console.log("current cycle: ", counter)
       } else {
-        console.log("cycle stopped")
+        console.log("not currently running")
       }
     },
     [grid]
@@ -35,6 +36,7 @@ export default function() {
         rows.map((cols, j) =>
           <StyledNode
             key={`${i}-${j}`}
+            // used for styling. cells-1 are live cells and cells-0 are dead
             id={`cells-${cols}`}
             onClick={() => clickGrid(i, j)}
           />
@@ -47,7 +49,8 @@ export default function() {
 // Styles
 const StyledGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(${Grid.numCols}, 20px);
+
+  grid-template-columns: repeat(25, 20px);
 `
 const StyledNode = styled.div`
   border: solid 1px black;

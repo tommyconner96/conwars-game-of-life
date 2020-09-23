@@ -15,4 +15,15 @@ const counterState = atom({
   default: 0
 })
 
-export { gridState, runningState, counterState }
+const rowState = atom({
+  key: "rowState",
+  default: 25
+})
+
+const colState = atom({
+  key: "colState",
+  default: 25
+})
+
+
+export { gridState, runningState, counterState, rowState, colState }
