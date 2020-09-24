@@ -1,5 +1,5 @@
-export const numRows = 25
-export const numCols = 50
+// export let numRows = 50
+// export let numCols = 50
 
 export const operations = [
   [0, 1],
@@ -12,14 +12,14 @@ export const operations = [
   [-1, 0]
 ]
 
-export const generateEmptyGrid = () => {
-  const rows = []
-  for (let i = 0; i < numRows; i++) {
-    rows.push(Array.from(Array(numCols), () => 0))
-  }
+// export const generateEmptyGrid = () => {
+//   const rows = []
+//   for (let i = 0; i < numRows; i++) {
+//     rows.push(Array.from(Array(numCols), () => 0))
+//   }
 
-  return rows
-}
+//   return rows
+// }
 
 // export const clickGrid = (i, j) => {
 //     const grid = useRecoilValue(gridState)

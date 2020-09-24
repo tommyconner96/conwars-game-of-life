@@ -1,37 +1,32 @@
 import React from "react"
-import { useEffect, useCallback, useRef } from "react"
-import { gridState, runningState, counterState } from "../recoilState/index"
-import { useRecoilState } from "recoil"
-import produce from "immer"
-import * as Grid from "../GridDefaults"
+import { runningState, sizeStr } from "../recoilState/index"
+import { useRecoilValue, useRecoilState } from "recoil"
 
 export default function(props) {
-  const [grid, setGrid] = useRecoilState(gridState)
-  const [counter, setCounter] = useRecoilState(counterState)
-  const [running, setRunning] = useRecoilState(runningState)
+  const running = useRecoilValue(runningState)
+ // sizeStr gets turned into sizeState - by a recoil selector - to be 
+ // used in the rest of the application
+  const [size, setSize] = useRecoilState(sizeStr)
 
-  const randomizeGrid = () => {
-    const rows = []
-    for (let i = 0; i < Grid.numRows; i++) {
-      rows.push(
-        Array.from(Array(Grid.numCols), () => (Math.random() > 0.7 ? 1 : 0))
-      )
-    }
-
-    setGrid(rows)
-    setCounter(0)
+  const handleChange = e => {
+    e.preventDefault()
+    setSize(e.target.value)
   }
+
 
   return (
     <div>
-      {/* {running ? <button onClick={() => stopRun()}>stop</button>: <button onClick={run}>start</button>} */}
       <button onClick={props.run}>
         {running ? "stop" : "start"}
       </button>
 
-      <button onClick={randomizeGrid}>random</button>
-      <button onClick={() => props.resetGrid()}>clear</button>
-      {/* <GameContainer /> */}
+      <button onClick={props.randomizeGrid}>random</button>
+      <button onClick={props.resetGrid}>clear</button>
+      <select onChange={handleChange} value={size}>
+          <option value="50x50">50x50</option>
+          <option value="25x25">25x25</option>
+          <option value="75x75">75x75</option>
+        </select>
     </div>
   )
 }
