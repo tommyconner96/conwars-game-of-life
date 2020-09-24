@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
-import { gridState, runningState, counterState, colState, rowState, sizeStr, changedSizeState } from "../recoilState/index"
+import { gridState, runningState, counterState, sizeState } from "../recoilState/index"
 import produce from "immer"
 import * as Grid from "../GridDefaults"
 import GameGrid from "./GameGrid"
@@ -10,41 +10,15 @@ export default function(props) {
   const [grid, setGrid] = useRecoilState(gridState)
   const [counter, setCounter] = useRecoilState(counterState)
   const [running, setRunning] = useRecoilState(runningState)
-  // const [numCols, setNumCols] = useRecoilState(colState)
-  // const [numRows, setNumRows] = useRecoilState(rowState)
-  // const [gridSize, setGridSize] = useRecoilState(sizeStr)
-  const gridSize = useRecoilValue(changedSizeState)
+  const gridSize = useRecoilValue(sizeState)
   const numCols = gridSize.updatedColumns
   const numRows = gridSize.updatedRows
 
-  // const handleChange = e => {
-  //   e.preventDefault()
-
-  //   setSize(e.target.value)
-  //   setRows(newArr[1])
-  //   setColumns(newArr[0])
-  // }
-
-  const generateEmptyGrid = (r, c) => {
-    const rows = []
-    console.log("bitch ass function", r, c)
-    for (let i = 0; i < r; i++) {
-      rows.push(Array.from(Array(c), () => 0))
-    }
-  
-    return rows
-  }
-
-  const resetGrid = () => {
-    setGrid(generateEmptyGrid(numRows, numCols))
-    setCounter(0)
-    setRunning(false)
-  }
+  // reset grid upon gridSize change
   useEffect(() => {
-    console.log(gridSize)
+    // console.log(gridSize)
     resetGrid()
   }, [gridSize])
-
 
   useEffect(
     () => {
@@ -54,7 +28,26 @@ export default function(props) {
     },
     [grid]
   )
+  // takes two args, (r,c) represents rows and columns
+  const generateEmptyGrid = (r, c) => {
+    const rows = []
+    for (let i = 0; i < r; i++) {
+      rows.push(Array.from(Array(c), () => 0))
+    }
+  
+    return rows
+  }
+  // resetGrid - passed to GameControls as a prop
+  // it is called in the useEffect here upon gridSize change
+  // and also when the clear button from GameControls is pressed
+  const resetGrid = () => {
+    setGrid(generateEmptyGrid(numRows, numCols))
+    setCounter(0)
+    setRunning(false)
+  }
 
+  // randomizeGrid - passed to GameControls as a prop
+  // used for the "random" button
   const randomizeGrid = () => {
     const rows = []
     for (let i = 0; i < numRows; i++) {
@@ -66,10 +59,10 @@ export default function(props) {
     setGrid(rows)
     setCounter(0)
   }
-
+  // defining our ref for running status of the game
   const runningRef = useRef(running)
   runningRef.current = running
-
+// passed to GameControls as a prop - used to begin the game
   const run = () => {
     setRunning(!running)
     if (!running) {
@@ -77,7 +70,7 @@ export default function(props) {
       runGame()
     }
   }
-  
+
   const runGame = () => {
     if (!runningRef.current) {
       return
@@ -99,7 +92,7 @@ export default function(props) {
                   neighbors += g[newI][newJ]
                 }
               })
-
+              // game rules/logic
               if (neighbors < 2 || neighbors > 3) {
                 gridCopy[i][j] = 0
               } else if (g[i][j] === 0 && neighbors === 3) {

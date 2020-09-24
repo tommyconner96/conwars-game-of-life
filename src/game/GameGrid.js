@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
-import { gridState, counterState, runningState, rowState, colState, sizeStr, changedSizeState } from "../recoilState/index"
+import { gridState, counterState, runningState, sizeState } from "../recoilState/index"
 import { useRecoilState, useRecoilValue } from "recoil"
-import * as Grid from "../GridDefaults"
 import produce from "immer"
 
 export default function() {
@@ -10,25 +9,14 @@ export default function() {
   const [counter, setCounter] = useRecoilState(counterState)
   const [grid, setGrid] = useRecoilState(gridState)
   const [running, setRunning] = useRecoilState(runningState)
-  // const [numCols, setNumCols] = useRecoilState(colState)
-  // const [numRows, setNumRows] = useRecoilState(rowState)
-  const gridSize = useRecoilValue(changedSizeState)
+  const gridSize = useRecoilValue(sizeState)
   const numCols = gridSize.updatedColumns
   const numRows = gridSize.updatedRows
 
-  // const columns = () => {
-  //   let arr = `${gridSize}`
-  //   let newArr = arr.split("x")
-  //   console.log(newArr[0])
-  //   return newArr[0]
-  // }
-
   useEffect(() => {
-      console.log("hello from gamegrid", gridSize)
       if (running === true) {
         // console.log(cols())
         setCounter(counter + 1)
-        console.log("print numcols", numCols)
         console.log("current cycle: ", counter)
       } else {
         console.log("not currently running")

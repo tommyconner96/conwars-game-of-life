@@ -1,39 +1,37 @@
 import { atom, selector } from "recoil"
 
 // atoms
+
+// the game grid - an array
 const gridState = atom({
   key: "gridState",
   default: []
 })
 
+// boolean: is the game running?
 const runningState = atom({
   key: "runningState",
   default: false
 })
 
+// counter: increments on every new generation
 const counterState = atom({
   key: "counterState",
   default: 0
 })
 
-// const rowState = atom({
-//   key: "rowState",
-//   default: 25
-// })
-
-// const colState = atom({
-//   key: "colState",
-//   default: 25
-// })
-
+// size as a string, so we can use our <select> in GameControls.js
+// to update it
 const sizeStr = atom({
   key: "sizeStr",
   default: "25x25"
 })
 
 // selectors
-const changedSizeState = selector({
-  key: "changedSizeState",
+// sizeState returns sizeStr as two seperate values, rows and columns, so we can
+// use them throughout the app seperately.
+const sizeState = selector({
+  key: "sizeState",
   get: ({ get }) => {
     const size = get(sizeStr)
     const arr = size.split("x")
@@ -50,8 +48,6 @@ export {
   gridState,
   runningState,
   counterState,
-  // rowState,
-  // colState,
   sizeStr,
-  changedSizeState
+  sizeState
 }
