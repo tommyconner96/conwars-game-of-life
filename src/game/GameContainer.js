@@ -1,35 +1,49 @@
 import React, { useRef, useEffect } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
-import { gridState, runningState, counterState, colState, rowState } from "../recoilState/index"
+import { gridState, runningState, counterState, colState, rowState, sizeStr, changedSizeState } from "../recoilState/index"
 import produce from "immer"
 import * as Grid from "../GridDefaults"
 import GameGrid from "./GameGrid"
 import GameControls from "./GameControls"
 
-export default function() {
+export default function(props) {
   const [grid, setGrid] = useRecoilState(gridState)
   const [counter, setCounter] = useRecoilState(counterState)
   const [running, setRunning] = useRecoilState(runningState)
-  const [numCols, setNumCols] = useRecoilState(colState)
-  const [numRows, setNumRows] = useRecoilState(rowState)
+  // const [numCols, setNumCols] = useRecoilState(colState)
+  // const [numRows, setNumRows] = useRecoilState(rowState)
+  // const [gridSize, setGridSize] = useRecoilState(sizeStr)
+  const gridSize = useRecoilValue(changedSizeState)
+  const numCols = gridSize.updatedColumns
+  const numRows = gridSize.updatedRows
 
-  const generateEmptyGrid = () => {
+  // const handleChange = e => {
+  //   e.preventDefault()
+
+  //   setSize(e.target.value)
+  //   setRows(newArr[1])
+  //   setColumns(newArr[0])
+  // }
+
+  const generateEmptyGrid = (r, c) => {
     const rows = []
-    for (let i = 0; i < numRows; i++) {
-      rows.push(Array.from(Array(numCols), () => 0))
+    console.log("bitch ass function", r, c)
+    for (let i = 0; i < r; i++) {
+      rows.push(Array.from(Array(c), () => 0))
     }
   
     return rows
   }
 
   const resetGrid = () => {
-    setGrid(generateEmptyGrid())
+    setGrid(generateEmptyGrid(numRows, numCols))
     setCounter(0)
     setRunning(false)
   }
   useEffect(() => {
+    console.log(gridSize)
     resetGrid()
-  }, [numCols])
+  }, [gridSize])
 
 
   useEffect(

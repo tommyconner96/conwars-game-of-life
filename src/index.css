@@ -8,3 +8,18 @@
 #cells-0 {
   background-color: pink;
 }
+
+#size-25 {
+  display: grid;
+  grid-template-columns: repeat(25, 20px);
+}
+
+#size-50 {
+  display: grid;
+  grid-template-columns: repeat(50, 20px);
+}
+
+#size-75 {
+  display: grid;
+  grid-template-columns: repeat(75, 20px);
+}
