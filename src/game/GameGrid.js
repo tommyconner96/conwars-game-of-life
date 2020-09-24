@@ -8,10 +8,9 @@ export default function() {
   
   const [counter, setCounter] = useRecoilState(counterState)
   const [grid, setGrid] = useRecoilState(gridState)
-  const [running, setRunning] = useRecoilState(runningState)
+  const running = useRecoilValue(runningState)
   const gridSize = useRecoilValue(sizeState)
   const numCols = gridSize.updatedColumns
-  const numRows = gridSize.updatedRows
 
   useEffect(() => {
       if (running === true) {
@@ -56,6 +55,6 @@ export default function() {
 // `
 const StyledNode = styled.div`
   border: solid 1px black;
-  width: 20px;
-  height: 20px;
+  width: 10px;
+  height: 10px;
 `
