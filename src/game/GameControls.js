@@ -15,7 +15,7 @@ export default function(props) {
 
 
   return (
-    <div>
+    <div className="controls">
       <button onClick={props.run}>
         {running ? "stop" : "start"}
       </button>
@@ -23,9 +23,10 @@ export default function(props) {
       <button onClick={props.randomizeGrid}>random</button>
       <button onClick={props.resetGrid}>clear</button>
       <select onChange={handleChange} value={size}>
-          <option value="50x50">50x50</option>
           <option value="25x25">25x25</option>
-          <option value="75x75">75x75</option>
+          <option value="25x50">25x50</option>
+          <option value="50x50">50x50</option>
+          <option value="50x75">50x75</option>
         </select>
     </div>
   )

@@ -1,17 +1,19 @@
 import React, { useEffect } from "react"
-import styled from "styled-components"
-import { gridState, counterState, runningState, sizeState } from "../recoilState/index"
+import {
+  gridState,
+  counterState,
+  runningState,
+  sizeState
+} from "../recoilState/index"
 import { useRecoilState, useRecoilValue } from "recoil"
 import produce from "immer"
 
 export default function() {
-  
   const [counter, setCounter] = useRecoilState(counterState)
   const [grid, setGrid] = useRecoilState(gridState)
-  const [running, setRunning] = useRecoilState(runningState)
+  const running = useRecoilValue(runningState)
   const gridSize = useRecoilValue(sizeState)
   const numCols = gridSize.updatedColumns
-  const numRows = gridSize.updatedRows
 
   useEffect(() => {
       if (running === true) {
@@ -26,17 +28,21 @@ export default function() {
   )
 
   const clickGrid = (i, j) => {
-    const newGrid = produce(grid, gridCopy => {
-      gridCopy[i][j] = grid[i][j] ? 0 : 1
-    })
-    setGrid(newGrid)
+    if (running === false) {
+      const newGrid = produce(grid, gridCopy => {
+        gridCopy[i][j] = grid[i][j] ? 0 : 1
+      })
+      setGrid(newGrid)
+    } else {
+      return
+    }
   }
 
   return (
-    <div id={`size-${numCols}`}>
+    <div className='grid' id={`size-${numCols}`}>
       {grid.map((rows, i) =>
         rows.map((cols, j) =>
-          <StyledNode
+          <div className='cells-each'
             key={`${i}-${j}`}
             // used for styling. cells-1 are live cells and cells-0 are dead
             id={`cells-${cols}`}
@@ -52,10 +58,10 @@ export default function() {
 // const StyledGrid = styled.div`
 //   display: grid;
 //   grid-template-columns: repeat(${props => props.gridSize}, 20px);
-  
+
 // `
-const StyledNode = styled.div`
-  border: solid 1px black;
-  width: 20px;
-  height: 20px;
-`
+// const StyledNode = styled.div`
+//   border: solid 1px black;
+//   width: 10px;
+//   height: 10px;
+// `

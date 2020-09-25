@@ -24,6 +24,7 @@ const counterState = atom({
 // to update it
 const sizeStr = atom({
   key: "sizeStr",
+  // string is rows x columns
   default: "25x25"
 })
 
@@ -35,6 +36,7 @@ const sizeState = selector({
   get: ({ get }) => {
     const size = get(sizeStr)
     const arr = size.split("x")
+    // string is rows x columns
     const updatedRows = parseInt(arr[0])
     const updatedColumns = parseInt(arr[1])
     return {
