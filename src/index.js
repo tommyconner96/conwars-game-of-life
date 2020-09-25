@@ -3,7 +3,6 @@ import ReactDOM from "react-dom"
 import "./index.css"
 import GameContainer from "./game/GameContainer"
 import { RecoilRoot } from "recoil"
-import * as serviceWorker from "./serviceWorker"
 
 ReactDOM.render(
   <RecoilRoot>
@@ -14,4 +13,3 @@ ReactDOM.render(
   document.getElementById("root")
 )
 
-serviceWorker.unregister()
