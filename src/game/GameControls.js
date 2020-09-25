@@ -15,7 +15,7 @@ export default function(props) {
 
 
   return (
-    <div>
+    <div className="controls">
       <button onClick={props.run}>
         {running ? "stop" : "start"}
       </button>

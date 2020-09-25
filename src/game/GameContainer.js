@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { gridState, runningState, counterState, sizeState } from "../recoilState/index"
 import produce from "immer"
-import * as Grid from "../GridDefaults"
+// import * as Grid from "../GridDefaults"
 import GameGrid from "./GameGrid"
 import GameControls from "./GameControls"
 
@@ -29,12 +29,22 @@ export default function(props) {
     [grid]
   )
 
-  const Game = () => {
-    return produce(grid, gridCopy => {
+  const Simulation = (_grid) => {
+    const operations = [
+      [0, 1],
+      [0, -1],
+      [1, -1],
+      [-1, 1],
+      [1, 1],
+      [-1, -1],
+      [1, 0],
+      [-1, 0]
+    ]
+    return produce(_grid, gridCopy => {
       for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
           let neighbors = 0
-          Grid.operations.forEach(([x, y]) => {
+          operations.forEach(([x, y]) => {
             const newI = i + x
             const newJ = j + y
             if (
@@ -43,13 +53,13 @@ export default function(props) {
               newJ >= 0 &&
               newJ < numCols
             ) {
-              neighbors += g[newI][newJ]
+              neighbors += _grid[newI][newJ]
             }
           })
           // game rules/logic
           if (neighbors < 2 || neighbors > 3) {
             gridCopy[i][j] = 0
-          } else if (grid[i][j] === 0 && neighbors === 3) {
+          } else if (_grid[i][j] === 0 && neighbors === 3) {
             gridCopy[i][j] = 1
           }
         }
@@ -77,15 +87,18 @@ export default function(props) {
   // randomizeGrid - passed to GameControls as a prop
   // used for the "random" button
   const randomizeGrid = () => {
-    const rows = []
-    for (let i = 0; i < numRows; i++) {
-      rows.push(
-        Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
-      )
+    if (running === false) {
+      const rows = []
+      for (let i = 0; i < numRows; i++) {
+        rows.push(
+          Array.from(Array(numCols), () => (Math.random() > 0.7 ? 1 : 0))
+        )
     }
-
     setGrid(rows)
     setCounter(0)
+    } else{
+      return
+    }
   }
   // defining our ref for running status of the game
   const runningRef = useRef(running)
@@ -103,46 +116,19 @@ export default function(props) {
     if (!runningRef.current) {
       return
     } else {
-      // setGrid(g => {
-      //   return produce(g, gridCopy => {
-      //     for (let i = 0; i < numRows; i++) {
-      //       for (let j = 0; j < numCols; j++) {
-      //         let neighbors = 0
-      //         Grid.operations.forEach(([x, y]) => {
-      //           const newI = i + x
-      //           const newJ = j + y
-      //           if (
-      //             newI >= 0 &&
-      //             newI < numRows &&
-      //             newJ >= 0 &&
-      //             newJ < numCols
-      //           ) {
-      //             neighbors += g[newI][newJ]
-      //           }
-      //         })
-      //         // game rules/logic
-      //         if (neighbors < 2 || neighbors > 3) {
-      //           gridCopy[i][j] = 0
-      //         } else if (g[i][j] === 0 && neighbors === 3) {
-      //           gridCopy[i][j] = 1
-      //         }
-      //       }
-      //     }
-      //   })
-      // })
-      setGrid(() => Game())
+      setGrid(() => Simulation(grid))
     }
   }
 
   return (
-    <div>
+    <div className="game-container">
       <GameControls
         run={run}
         resetGrid={resetGrid}
         randomizeGrid={randomizeGrid}
       />
       <GameGrid />
-      <p>
+      <p className="counter">
         current generation: {counter}
       </p>
     </div>
