@@ -2,7 +2,6 @@ import React, { useRef, useEffect } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { gridState, runningState, counterState, sizeState } from "../recoilState/index"
 import produce from "immer"
-// import * as Grid from "../GridDefaults"
 import GameGrid from "./GameGrid"
 import GameControls from "./GameControls"
 
