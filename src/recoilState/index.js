@@ -8,6 +8,16 @@ const gridState = atom({
   default: []
 })
 
+// next grid state - used for double buffer
+const nextGridState = atom({
+  key: "nextGridState",
+  default: []
+})
+// when start is called
+const resetCalled = atom({
+  key: "resetCalled",
+  default: false
+})
 // boolean: is the game running?
 const runningState = atom({
   key: "runningState",
@@ -48,6 +58,8 @@ const sizeState = selector({
 
 export {
   gridState,
+  nextGridState,
+  resetCalled,
   runningState,
   counterState,
   sizeStr,
