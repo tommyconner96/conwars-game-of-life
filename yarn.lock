@@ -1412,6 +1412,11 @@
   resolved "https://registry.yarnpkg.com/@popperjs/core/-/core-2.4.4.tgz#11d5db19bd178936ec89cd84519c4de439574398"
   integrity sha512-1oO6+dN5kdIA3sKPZhRGJTfGVP4SWV6KqlMOwry4J3HfyD68sl/3KmG7DeYUzvN+RbhXDnv/D8vNNB8168tAMg==
 
+"@react-corekit/use-interval@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@react-corekit/use-interval/-/use-interval-1.1.1.tgz#579914c1a6507e136887cff3c05475b58758b435"
+  integrity sha512-aC+d3NkzNVQqzr55WIRSuay2ydY0GFjZ/rxeUm0SOeiM4uzTnP245EKDt6fhakffXAYhociip2gRVhgj5TCwkQ==
+
 "@restart/context@^2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@restart/context/-/context-2.1.4.tgz#a99d87c299a34c28bd85bb489cb07bfd23149c02"

@@ -1,32 +1,39 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
-import { gridState, runningState, counterState, sizeState } from "../recoilState/index"
+import { gridState, runningState, counterState, sizeState, nextGridState, resetCalled } from "../recoilState/index"
 import produce from "immer"
 import GameGrid from "./GameGrid"
 import GameControls from "./GameControls"
+import { useInterval } from "@react-corekit/use-interval"
 
 export default function(props) {
   const [grid, setGrid] = useRecoilState(gridState)
+  const [nextGrid, setNextGrid] = useRecoilState(nextGridState)
   const [counter, setCounter] = useRecoilState(counterState)
   const [running, setRunning] = useRecoilState(runningState)
+  const [reset, setReset] = useRecoilState(resetCalled)
   const gridSize = useRecoilValue(sizeState)
   const numCols = gridSize.updatedColumns
   const numRows = gridSize.updatedRows
 
-  // reset grid upon gridSize change
+  // defining our ref for running status of the game
+  const runningRef = useRef(running)
+  runningRef.current = running
+
+  // reset grid upon gridSize change, or when reset is called from GameControls
   useEffect(() => {
     // console.log(gridSize)
     resetGrid()
-  }, [gridSize])
+    setReset(false)
+  }, [gridSize, reset])
 
-  useEffect(
-    () => {
-      if (running === true) {
-        setTimeout(runGame, 200)
-      }
-    },
-    [grid]
-  )
+
+  useInterval(() => {
+    if (runningRef.current) {
+      setNextGrid(() => Simulation(grid))
+      setCounter(counter + 1)
+    }
+  }, 500)
 
   const Simulation = (_grid) => {
     const operations = [
@@ -39,6 +46,7 @@ export default function(props) {
       [1, 0],
       [-1, 0]
     ]
+    
     return produce(_grid, gridCopy => {
       for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
@@ -79,6 +87,7 @@ export default function(props) {
   // and also when the clear button from GameControls is pressed
   const resetGrid = () => {
     setGrid(generateEmptyGrid(numRows, numCols))
+    setNextGrid(generateEmptyGrid(numRows,numCols))
     setCounter(0)
     setRunning(false)
   }
@@ -99,30 +108,10 @@ export default function(props) {
       return
     }
   }
-  // defining our ref for running status of the game
-  const runningRef = useRef(running)
-  runningRef.current = running
-// passed to GameControls as a prop - used to begin the game
-  const run = () => {
-    setRunning(!running)
-    if (!running) {
-      runningRef.current = true
-      runGame()
-    }
-  }
-
-  const runGame = () => {
-    if (!runningRef.current) {
-      return
-    } else {
-      setGrid(() => Simulation(grid))
-    }
-  }
 
   return (
     <div className="game-container">
       <GameControls
-        run={run}
         resetGrid={resetGrid}
         randomizeGrid={randomizeGrid}
       />
