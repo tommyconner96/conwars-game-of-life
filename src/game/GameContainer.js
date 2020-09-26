@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react"
+import React, { useRef, useEffect } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { gridState, runningState, counterState, sizeState, nextGridState, resetCalled } from "../recoilState/index"
 import produce from "immer"
