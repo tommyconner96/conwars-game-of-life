@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from "react"
 import {
   gridState,
-  counterState,
   runningState,
   sizeState,
   nextGridState
@@ -14,19 +13,17 @@ export default function() {
   const [grid, setGrid] = useRecoilState(gridState)
   const [nextGrid, setNextGrid] = useRecoilState(nextGridState)
   const running = useRecoilValue(runningState)
-  const counter = useRecoilValue(counterState)
   const runningRef = useRef(running)
   runningRef.current = running
   const gridSize = useRecoilValue(sizeState)
   const numCols = gridSize.updatedColumns
 
-  // double buffer: 
+
   useEffect(() => {
-    console.log("double buffer, current frame:", counter)
     console.log("current grid state: ", grid)
     console.log("next grid state: ", nextGrid)
     setGrid(nextGrid)
-  },[nextGrid])
+  },[nextGrid, setGrid])
 
   const clickGrid = (i, j) => {
     if (running === false) {

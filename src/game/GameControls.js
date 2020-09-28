@@ -27,19 +27,24 @@ const handleRunning = () => {
 
   return (
     <div className="controls">
+    <div className="controls-buttons">
       <button onClick={handleRunning}>
-        {running ? "stop" : "start"}
+        {running ? "Stop" : "Start"}
       </button>
-
-      <button onClick={props.randomizeGrid}>random</button>
-      <button onClick={() => setReset(true)}>clear</button>
+      <button onClick={props.runOnce}>Next</button>
+      <button onClick={props.randomizeGrid}>Randomize</button>
+      <button onClick={() => setReset(true)}>Clear</button>
+      </div>
+      <div className="controls-sizes">
       <select onChange={handleChange} value={size}>
           <option value="25x25">25x25</option>
           <option value="25x50">25x50</option>
           <option value="50x50">50x50</option>
           <option value="50x75">50x75</option>
         </select>
+      </div>
 
     </div>
+
   )
 }
