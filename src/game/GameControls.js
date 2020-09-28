@@ -31,7 +31,7 @@ const handleRunning = () => {
       <button onClick={handleRunning}>
         {running ? "Stop" : "Start"}
       </button>
-      <button onClick={props.runOnce}>Next</button>
+      <button type="button" onClick={props.runOnce}>Next</button>
       <button onClick={props.randomizeGrid}>Randomize</button>
       <button onClick={() => setReset(true)}>Clear</button>
       </div>
