@@ -1,6 +1,19 @@
 body {
   background-color: #4E4A59;
 }
+body .header-container {
+  width: fit-content;
+  margin: 0 auto;
+  text-align: center;
+}
+body .header-container h1 {
+  border-radius: 5px;
+  padding: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: white;
+  background-color: black;
+  text-align: center;
+}
 body .app-container {
   display: flex;
   flex-wrap: wrap;
