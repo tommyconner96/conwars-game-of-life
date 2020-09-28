@@ -16,6 +16,16 @@
   padding: 5px
 }
 
+.controls-buttons {
+  margin: 0 auto;
+  padding: 5px
+}
+
+.controls-sizes {
+  margin: 0 auto;
+  text-align: center;
+}
+
 .counter {
   margin: 0 auto;
   background-color: firebrick;

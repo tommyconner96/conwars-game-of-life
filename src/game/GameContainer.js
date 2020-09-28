@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useCallback } from "react"
 import { useRecoilState, useRecoilValue } from "recoil"
 import { gridState, runningState, counterState, sizeState, nextGridState, resetCalled } from "../recoilState/index"
 import produce from "immer"
@@ -30,12 +30,18 @@ export default function(props) {
 
   useInterval(() => {
     if (runningRef.current) {
-      setNextGrid(() => Simulation(grid))
-      setCounter(counter + 1)
+      setNextGrid(Simulation())
+      // setCounter(counter + 1)
     }
-  }, 500)
+  }, 700)
 
-  const Simulation = (_grid) => {
+  // used for "Next" button. passed as a prop to GameControls
+  const runOnce = () => {
+    setNextGrid(Simulation())
+    setRunning(false)
+  }
+
+  const Simulation = useCallback(() => {
     const operations = [
       [0, 1],
       [0, -1],
@@ -46,8 +52,7 @@ export default function(props) {
       [1, 0],
       [-1, 0]
     ]
-    
-    return produce(_grid, gridCopy => {
+    return (produce(grid, gridCopy => {
       for (let i = 0; i < numRows; i++) {
         for (let j = 0; j < numCols; j++) {
           let neighbors = 0
@@ -60,19 +65,20 @@ export default function(props) {
               newJ >= 0 &&
               newJ < numCols
             ) {
-              neighbors += _grid[newI][newJ]
+              neighbors += grid[newI][newJ]
             }
           })
           // game rules/logic
           if (neighbors < 2 || neighbors > 3) {
             gridCopy[i][j] = 0
-          } else if (_grid[i][j] === 0 && neighbors === 3) {
+          } else if (grid[i][j] === 0 && neighbors === 3) {
             gridCopy[i][j] = 1
           }
         }
       }
-    })
-  }
+      setCounter(counter + 1)
+    }))
+  },[grid])
   // takes two args, (r,c) represents rows and columns
   const generateEmptyGrid = (r, c) => {
     const rows = []
@@ -114,6 +120,7 @@ export default function(props) {
       <GameControls
         resetGrid={resetGrid}
         randomizeGrid={randomizeGrid}
+        runOnce={runOnce}
       />
       <GameGrid />
       <p className="counter">
