@@ -1,15 +1,23 @@
 body {
-  background-color: #394053;
+  background-color: #4E4A59;
 }
 body .app-container {
   display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
   margin-top: 50px;
+  background-color: #454053;
+  width: 100%;
+  height: 100%;
+  padding-top: 50px;
+  padding-bottom: 50px;
 }
 body .app-container .info-container {
   border-radius: 5px;
   background-color: #C68866;
-  width: 30%;
+  width: 500px;
   margin: 0 auto;
+  margin-top: 20px;
 }
 body .app-container .info-container h1 {
   text-align: center;
@@ -22,6 +30,8 @@ body .app-container .info-container li {
 }
 body .app-container .info-container p {
   font-size: 21px;
+  padding-left: 5px;
+  padding-right: 5px;
 }
 body .app-container .info-container:hover {
   background-color: #CC8B8C;
@@ -55,8 +65,18 @@ body .app-container .game-container .grid .cells-each {
 body .app-container .game-container .grid #cells-0:hover {
   background-color: #CC8B8C;
 }
+@media (max-width: 800px) {
+  body .app-container .game-container .grid #cells-0:hover {
+    background-color: #C69DD2;
+  }
+}
 body .app-container .game-container .grid #cells-1:hover {
   background-color: #cd5c5c;
+}
+@media (max-width: 800px) {
+  body .app-container .game-container .grid #cells-1:hover {
+    background-color: #9400D3;
+  }
 }
 body .app-container .game-container #size-25 {
   display: grid;
@@ -89,6 +109,12 @@ body .app-container .game-container .controls .controls-buttons button {
   display: inline-block;
   font-size: 21px;
   margin: 4px 2px;
+}
+@media (max-width: 500px) {
+  body .app-container .game-container .controls .controls-buttons button {
+    padding: 6px 12px;
+    font-size: 16px;
+  }
 }
 body .app-container .game-container .controls .controls-buttons button:hover {
   background-color: #CC8B8C;
