@@ -1,13 +1,13 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import "./index.css"
-import GameContainer from "./game/GameContainer"
+import "./styles/index.css"
+import App from "./App"
 import { RecoilRoot } from "recoil"
 
 ReactDOM.render(
   <RecoilRoot>
     <React.StrictMode>
-      <GameContainer />
+      <App />
     </React.StrictMode>
   </RecoilRoot>,
   document.getElementById("root")

@@ -1,0 +1,97 @@
+body {
+    background-color: brown;
+
+    .app-container {
+        display: flex;
+        .info-container {
+            background-color: cadetblue;
+            width: 30%;
+        }
+        .game-container {
+            background-color: dodgerblue;
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            margin: 0 auto;
+
+            .grid {
+                margin: 0 auto;
+
+                /* living cell display properties */
+                #cells-1 {
+                    background-color: purple;
+                }
+
+                /* dead cell (default) display properties */
+                #cells-0 {
+                    background-color: pink;
+                }
+
+                .cells-each {
+                    border: solid 1px black;
+                    width: 10px;
+                    height: 10px;
+                }
+            }
+
+            #size-25 {
+                display: grid;
+                grid-template-columns: repeat(25, 10px);
+            }
+
+            #size-50 {
+                display: grid;
+                grid-template-columns: repeat(50, 10px);
+            }
+
+            #size-75 {
+                display: grid;
+                grid-template-columns: repeat(75, 10px);
+            }
+
+            .controls {
+                margin: 0 auto;
+                padding: 5px;
+
+                .controls-buttons {
+                    margin: 0 auto;
+                    padding: 5px;
+
+                    button {
+                        border: none;
+                        border-radius: 5px;
+                        background-color: antiquewhite;
+                        color: black;
+                        padding: 16px 32px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 16px;
+                        margin: 4px 2px;
+                    }
+
+                    button:hover {
+                        background-color: blueviolet;
+                    }
+
+                }
+
+
+                .controls-sizes {
+                    margin: 0 auto;
+                    text-align: center;
+                }
+            }
+
+
+            .counter {
+                margin: 0 auto;
+                background-color: firebrick;
+                margin-top: 5px;
+                margin-bottom: 5px;
+                padding: 5px;
+            }
+        }
+    }
+}

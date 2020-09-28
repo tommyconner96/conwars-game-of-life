@@ -1,0 +1,82 @@
+body {
+  background-color: brown;
+}
+body .app-container {
+  display: flex;
+}
+body .app-container .info-container {
+  background-color: cadetblue;
+  width: 30%;
+}
+body .app-container .game-container {
+  background-color: dodgerblue;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+}
+body .app-container .game-container .grid {
+  margin: 0 auto;
+  /* living cell display properties */
+  /* dead cell (default) display properties */
+}
+body .app-container .game-container .grid #cells-1 {
+  background-color: purple;
+}
+body .app-container .game-container .grid #cells-0 {
+  background-color: pink;
+}
+body .app-container .game-container .grid .cells-each {
+  border: solid 1px black;
+  width: 10px;
+  height: 10px;
+}
+body .app-container .game-container #size-25 {
+  display: grid;
+  grid-template-columns: repeat(25, 10px);
+}
+body .app-container .game-container #size-50 {
+  display: grid;
+  grid-template-columns: repeat(50, 10px);
+}
+body .app-container .game-container #size-75 {
+  display: grid;
+  grid-template-columns: repeat(75, 10px);
+}
+body .app-container .game-container .controls {
+  margin: 0 auto;
+  padding: 5px;
+}
+body .app-container .game-container .controls .controls-buttons {
+  margin: 0 auto;
+  padding: 5px;
+}
+body .app-container .game-container .controls .controls-buttons button {
+  border: none;
+  border-radius: 5px;
+  background-color: antiquewhite;
+  color: black;
+  padding: 16px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+}
+body .app-container .game-container .controls .controls-buttons button:hover {
+  background-color: blueviolet;
+}
+body .app-container .game-container .controls .controls-sizes {
+  margin: 0 auto;
+  text-align: center;
+}
+body .app-container .game-container .counter {
+  margin: 0 auto;
+  background-color: firebrick;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding: 5px;
+}
+
+/*# sourceMappingURL=index.css.map */
