@@ -2,8 +2,6 @@
 ## Written in React / Recoil
 > Simple implementation of Conway's Game Of Life, using Recoil for state management and sass for styling.
 
-[![NPM Version][npm-image]][npm-url]
-
 Conway's Game Of Life is a Turing-Complete cellular atomaton developed by John Horton Conway in 1970. It can simulate a universal constructor or any other Turing Machine. 
 
 ## Installation
