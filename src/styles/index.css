@@ -31,6 +31,11 @@ body .app-container .info-container {
   width: 500px;
   margin: 0 auto;
 }
+@media (max-width: 800px) {
+  body .app-container .info-container {
+    margin-top: 20px;
+  }
+}
 body .app-container .info-container h1 {
   text-align: center;
 }
